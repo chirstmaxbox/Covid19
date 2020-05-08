@@ -4,6 +4,7 @@ import axios from "axios";
 import LineChart from "./LineChart";
 import CardChart from "./CardChart";
 import GlobalTable from "./GlobalTable";
+import Geography from "./Geography";
 
 window.baseURL = "https://pomber.github.io/covid19/timeseries.json";
 class App extends React.Component {
@@ -31,7 +32,7 @@ class App extends React.Component {
     }
 
     rowClick = (name) => {
-        this.calculateData(name, this.state.v_countries);
+        //this.calculateData(name, this.state.v_countries);
     }
 
     calculateData = (country, data) => {
@@ -115,8 +116,11 @@ class App extends React.Component {
                         <CardChart worldStats={this.state.v_worldStats} loading={this.state.loading}/>
                     </div>
                     {this.state.v_num_Of_Countries > 1 && <div><GlobalTable countryDetails={this.state.v_countryDetail} rowClick={this.rowClick}/></div>}
-                    <div>
+                    <div className="padding-bottom-50">
                         <LineChart newCasesDates={this.state.v_new_case_dates} loading={this.state.loading}/>
+                    </div>
+                    <div className="padding-bottom-20">
+                        <Geography countryDetails={this.state.v_countryDetail} loading={this.state.loading}/>
                     </div>
                 </div>
 

@@ -21,14 +21,6 @@ function LineChart(props) {
             data.push({ date: new Date(temp[0], temp[1] - 1, temp[2]), value: key.value });
         })
 
-        /*
-
-        let visits = 10;
-        for (let i = 1; i < 366; i++) {
-            visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-            data.push({ date: new Date(2018, 0, i), value: visits });
-        }
-        */
         chart.data = data;
 
         let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
@@ -55,8 +47,9 @@ function LineChart(props) {
 
     return (
         <>
-            <div id="chart-div" style={{height: "500px"}}></div>
             {props.loading && <Spinner animation="border" role="status"></Spinner>}
+            <div id="chart-div" style={{height: "500px"}}></div>
+
         </>
     )
 

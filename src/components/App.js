@@ -109,7 +109,7 @@ class App extends React.Component {
                 </div>
                 <div>
                     <div>
-                        <p className="text-right padding-top-120 padding-right-70">Last update: {this.state.v_lastUpdate.toString()}</p>
+                        <p className="text-right padding-top-120 padding-right-70">Last update: {this.state.v_lastUpdate.toLocaleString()}</p>
                         <h1 className="font-size-275em text-center padding-bottom-50">{this.state.v_country_name}</h1>
                     </div>
                     <div>

@@ -7,7 +7,7 @@ function LineChart(props) {
     useEffect(() => {
         let chart = am4core.create("chart-div", am4charts.XYChart);
         let title = chart.titles.create();
-        title.text = "New Cases";
+
         title.fontSize = 25;
         title.marginBottom = 10;
         title.fontWeight = "bold";
@@ -21,6 +21,9 @@ function LineChart(props) {
             data.push({ date: new Date(temp[0], temp[1] - 1, temp[2]), value: key.value });
         })
 
+        if(data.length > 0) {
+            title.text = "New Cases";
+        }
         chart.data = data;
 
         let dateAxis = chart.xAxes.push(new am4charts.DateAxis());

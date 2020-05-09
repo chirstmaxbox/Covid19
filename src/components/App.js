@@ -5,8 +5,10 @@ import LineChart from "./LineChart";
 import CardChart from "./CardChart";
 import GlobalTable from "./GlobalTable";
 import Geography from "./Geography";
+import CanadaProvinceChart from "./CanadaProvinceChart";
 
 window.baseURL = "https://pomber.github.io/covid19/timeseries.json";
+window.canadaURL = "https://api.covid19tracker.ca/summary/split";
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -18,17 +20,29 @@ class App extends React.Component {
             v_worldStats: {},
             v_lastUpdate: "",
             v_country_name: "",
+            v_canada_provinces: [],
             v_num_Of_Countries: 0
         }
-        this.loadData = this.loadData.bind(this);
+        this.loadWorldData = this.loadWorldData.bind(this);
+        this.loadCanadaData = this.loadCanadaData.bind(this);
     }
 
     componentDidMount() {
-        this.loadData();
+        this.loadWorldData();
+        this.moveToTop();
+    }
+
+    moveToTop = () => {
+        window.scrollTo(0, 0);
     }
 
     selectCountry = (e) => {
-        this.calculateData(e.target.value, this.state.v_countries);
+        let name = e.type === "change" ? e.target.value: e.target.text;
+        if(name === this.state.v_country_name) return;
+        if(name === "Canada") {
+            this.loadCanadaData();
+        }
+        this.calculateData(name, this.state.v_countries);
     }
 
     rowClick = (name) => {
@@ -87,8 +101,8 @@ class App extends React.Component {
         });
     }
 
-    loadData() {
-        axios.get(`${window.baseURL}`)
+    async loadWorldData() {
+        await axios.get(`${window.baseURL}`)
             .then((response => {
                     switch (response.status) {
                         case 200:
@@ -101,28 +115,64 @@ class App extends React.Component {
             )
     }
 
+    loadCanadaData() {
+        fetch(`${window.canadaURL}`)
+            .then(response => response.json())
+            .then(data => {
+                let provinces = [];
+                let last_updated = data.last_updated;
+                data.data.forEach(({province, change_cases, total_cases, total_recoveries}) => {
+                    provinces.push({province, last_updated, change_cases, total_cases, total_recoveries});
+                })
+
+                this.setState({
+                    v_canada_provinces: provinces
+                });
+            })
+            .catch(error => {
+
+            })
+    }
+
+
     render() {
         return (
             <>
                 <div>
-                    <Navigation countries={this.state.v_countries} onChange={this.selectCountry} countryName={this.state.v_country_name}/>
+                    <Navigation countries={this.state.v_countries} moveToStop={this.moveToTop} onChange={this.selectCountry} countryName={this.state.v_country_name}/>
                 </div>
-                <div>
-                    <div>
+                    <div className="container-fluid">
                         <p className="text-right padding-top-120 padding-right-70">Last update: {this.state.v_lastUpdate.toLocaleString()}</p>
                         <h1 className="font-size-275em text-center padding-bottom-50">{this.state.v_country_name}</h1>
                     </div>
-                    <div>
+                    <div className="container-fluid">
                         <CardChart worldStats={this.state.v_worldStats} loading={this.state.loading}/>
                     </div>
-                    {this.state.v_num_Of_Countries > 1 && <div><GlobalTable countryDetails={this.state.v_countryDetail} rowClick={this.rowClick}/></div>}
-                    <div className="padding-bottom-50">
+                    <div className="container-fluid">
+                        {this.state.v_num_Of_Countries > 1 && <GlobalTable countryDetails={this.state.v_countryDetail} rowClick={this.rowClick}/>}
+                    </div>
+                    <div className="container-fluid padding-bottom-50">
                         <LineChart newCasesDates={this.state.v_new_case_dates} loading={this.state.loading}/>
                     </div>
-                    <div className="padding-bottom-20">
-                        <Geography countryDetails={this.state.v_countryDetail} loading={this.state.loading}/>
+                    {this.state.v_country_name === "Canada" &&
+                    <div className="container-fluid padding-bottom-50">
+                        <CanadaProvinceChart provinces={this.state.v_canada_provinces} />
+                    </div>}
+                    <div className="container-fluid padding-bottom-50">
+                        {this.state.v_num_Of_Countries > 1 && <Geography countryDetails={this.state.v_countryDetail} loading={this.state.loading}/>}
                     </div>
-                </div>
+
+                    <div className="container-fluid bg-secondary">
+                        <hr/>
+                        <div className="text-center center-block">
+                                <a href="https://www.youtube.com/channel/UCOTB75848ANSiqjumoFUFWw"><i
+                                    className="fa fa-youtube-square fa-3x margin-right1rem"></i></a>
+                                <a href="https://www.linkedin.com/in/anh-tran-53763b39/"><i
+                                    className="fa fa-linkedin fa-3x margin-right1rem"></i></a>
+                                <a href="mailto:anh.a.tran@rbc.com"><i className="fa fa-envelope-square fa-3x"></i></a>
+                        </div>
+                        <hr/>
+                    </div>
 
             </>
         );

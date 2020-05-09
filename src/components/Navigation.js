@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
+const logo = require("../svg/logo.png");
 function Navigation(props) {
     const [countryArray, setCountryArray] = useState([]);
     useEffect(() => {
@@ -9,8 +10,14 @@ function Navigation(props) {
     return (
             <div>
                 <nav className="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
-                    <div className="container">
-                        <a className="navbar-brand js-scroll-trigger">Covid-19 Statistics</a>
+                    <div className="container-fluid">
+                        <div>
+                            <span className="navbar-brand"><img src={logo} onClick={props.moveToStop} style={{width: "48px", height:"48px"}}></img>Covid-19 Statistics</span>
+                        </div>
+                        <div className="font-weight500">
+                            <a className="navbar-brand font-size-150em" onClick={props.onChange}>Canada</a>
+                            <a className="navbar-brand font-size-150em" onClick={props.onChange}>Global</a>
+                        </div>
                         <div className="col-4 align-self-center">
                             <form>
                                 <div>

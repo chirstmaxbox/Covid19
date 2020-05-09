@@ -22,7 +22,7 @@ function LineChart(props) {
         })
 
         if(data.length > 0) {
-            title.text = "New Cases";
+            title.text = "New Cases per Day";
         }
         chart.data = data;
 
@@ -46,7 +46,7 @@ function LineChart(props) {
         let scrollbarX = new am4charts.XYChartScrollbar();
         scrollbarX.series.push(series);
         chart.scrollbarX = scrollbarX;
-    });
+    }, [props.newCasesDates]);
 
     return (
         <>

@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
 import { MDBDataTable, MDBNavLink } from 'mdbreact';
+import {overwrite, getCode} from "country-list";
+import Flag from 'react-world-flags';
 
 function GlobalTable(props) {
     const columns = [
         {label: [<p className="text-left">Country</p>], field: 'country'},
-        {label:  [<p className="text-center">Total Cases</p>], field: 'total_case'},
+        {label: [<p className="text-center">Total Cases</p>], field: 'total_case'},
         {label: [<p className="text-center">New Cases</p>], field: 'new_cases'},
         {label: [<p className="text-center">Total Deaths</p>], field: 'total_deaths'},
         {label: [<p className="text-center">New Deaths</p>], field: 'new_deaths'},
@@ -29,11 +31,24 @@ function GlobalTable(props) {
             return 0;
         });
 
+        overwrite([
+            {code: 'RU', name: 'Russia'},
+            {code: 'US', name: 'US'},
+            {code: "VN", name: "Vietnam"},
+            {code: "IR", name: "Iran"},
+            {code: "SY", name: "Syria"},
+            {code: "LA", name: "Laos"},
+            {code: "KR", name: "Korea, South"},
+            {code: "VE", name: "Venezuela"},
+            {code: "GB", name: "United Kingdom"},
+            {code: "BO", name: "Bolivia"}
+        ])
+
         let countries = [];
         temp.map((element) => {
             countries.push({
-                country: element.key,
-                total_case: [<p className="text-center">{element.value.confirmed.toLocaleString()}</p>],
+                country: [element.key, getCode(element.key) && <Flag code={getCode(element.key)} callback={<span>unknown</span>} style={{paddingLeft: "5px", width:"30px", height:"30px"}}/>],
+                total_case: [<p className="text-center font-weight-bold">{element.value.confirmed.toLocaleString()}</p>],
                 new_cases: [<p className="text-orange font-weight-bold text-center">{element.value.new_cases.toLocaleString()}</p>],
                 total_deaths: [<p className="text-center">{element.value.deaths.toLocaleString()}</p>],
                 new_deaths: [<p className="text-danger font-weight-bold text-center">{element.value.new_deaths.toLocaleString()}</p>],

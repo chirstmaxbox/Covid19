@@ -8,7 +8,7 @@ import Geography from "./Geography";
 import CanadaProvinceChart from "./CanadaProvinceChart";
 
 window.baseURL = "https://pomber.github.io/covid19/timeseries.json";
-window.canadaURL = "https://api.covid19tracker.ca/summary/split";
+const canadaURL = "https://api.covid19tracker.ca/summary/split";
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -143,7 +143,8 @@ class App extends React.Component {
 
 
     loadCanadaData() {
-        fetch(`${window.canadaURL}`, {mode: 'cors'})
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        fetch(proxyurl + canadaURL)
             .then(response => response.json())
             .then(data => {
                 let provinces = [];

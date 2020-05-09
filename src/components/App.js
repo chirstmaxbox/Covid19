@@ -115,6 +115,7 @@ class App extends React.Component {
             )
     }
 
+    /*
     async loadCanadaData() {
         await axios.get(`${window.canadaURL}`)
             .then((response => {
@@ -138,9 +139,11 @@ class App extends React.Component {
             )
     }
 
-    /*
+     */
+
+
     loadCanadaData() {
-        fetch(`${window.canadaURL}`)
+        fetch(`${window.canadaURL}`, {mode: 'cors'})
             .then(response => response.json())
             .then(data => {
                 let provinces = [];
@@ -157,8 +160,6 @@ class App extends React.Component {
 
             })
     }
-
-     */
 
 
     render() {

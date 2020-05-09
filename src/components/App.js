@@ -115,6 +115,30 @@ class App extends React.Component {
             )
     }
 
+    async loadCanadaData() {
+        await axios.get(`${window.canadaURL}`)
+            .then((response => {
+                    switch (response.status) {
+                        case 200:
+                            let data = response.data;
+                            let provinces = [];
+                            let last_updated = data.last_updated;
+                            data.data.forEach(({province, change_cases, total_cases, total_recoveries}) => {
+                                provinces.push({province, last_updated, change_cases, total_cases, total_recoveries});
+                            })
+
+                            this.setState({
+                                v_canada_provinces: provinces
+                            });
+                            break;
+                        default:
+                            break;
+                    }
+                })
+            )
+    }
+
+    /*
     loadCanadaData() {
         fetch(`${window.canadaURL}`)
             .then(response => response.json())
@@ -133,6 +157,8 @@ class App extends React.Component {
 
             })
     }
+
+     */
 
 
     render() {

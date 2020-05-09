@@ -12,7 +12,7 @@ function Navigation(props) {
                 <nav className="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
                     <div className="container-fluid">
                         <div>
-                            <span className="navbar-brand"><img src={logo} onClick={props.moveToStop} style={{width: "48px", height:"48px"}}></img>Covid-19 Statistics</span>
+                            <span className="navbar-brand"><img src={logo} onClick={props.moveToStop} style={{width: "48px", height:"48px"}} alt=""></img>Covid-19 Statistics</span>
                         </div>
                         <div className="font-weight500">
                             <a className="navbar-brand font-size-150em" onClick={props.onChange}>Canada</a>

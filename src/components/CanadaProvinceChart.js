@@ -1,61 +1,60 @@
 import React, {useEffect} from "react";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4core from "@amcharts/amcharts4/core";
-import * as am4themes_animated from "@amcharts/amcharts4/themes/animated"
 
 function CanadaProvinceChart(props) {
 
     useEffect(() => {
         drawBarGraph(props.provinces, 1);
         drawBarGraph(props.provinces, 2);
-
-    }, [props.provinces])
+    }, [props.provinces]);
 
     function getCode(code) {
+        let ret = code;
         switch (code) {
             case "NL":
-                return "Newfoundland & Lab";
+                ret = "Newfoundland & Lab";
                 break;
             case "PE":
-                return "Prince Edward Island";
+                ret = "Prince Edward Island";
                 break;
             case "NS":
-                return "Nova Scotia";
+                ret = "Nova Scotia";
                 break;
             case "NB":
-                return "New Brunswick";
+                ret = "New Brunswick";
                 break;
             case "QC":
-                return "Quebec";
+                ret = "Quebec";
                 break;
             case "ON":
-                return "Ontario";
+                ret = "Ontario";
                 break;
             case "MB":
-                return "Manitoba";
+                ret = "Manitoba";
                 break;
             case "SK":
-                return "Saskatchewan";
+                ret = "Saskatchewan";
                 break;
             case "AB":
-                return "Alberta";
+                ret = "Alberta";
                 break;
             case "BC":
-                return "British Columbia";
+                ret = "British Columbia";
                 break;
             case "YT":
-                return "Yukon";
+                ret = "Yukon";
                 break;
             case "NT":
-                return "Northwest Territories";
+                ret = "Northwest Territories";
                 break;
             case "NU":
-                return "Nunavut";
+                ret = "Nunavut";
                 break;
             default:
-                return code;
                 break;
         }
+        return ret;
     }
 
     function drawBarGraph(provinces, type) {
@@ -85,7 +84,7 @@ function CanadaProvinceChart(props) {
         })
 
         if(data.length > 0) {
-            if(type == 1) {
+            if(type === 1) {
                 title.text = "Total Cases per Province - Up to: " + updated;
             }
             else {

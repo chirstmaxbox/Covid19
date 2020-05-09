@@ -3,15 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c10d895a-e88a-40da-b6c8-691f3487d38b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Geography.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Geography.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CanadaProvinceChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CanadaProvinceChart.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/GlobalTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/GlobalTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/LineChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/LineChart.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Navigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navigation.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/css/index.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +93,8 @@
       <workItem from="1588905040338" duration="3785000" />
       <workItem from="1588940554385" duration="8767000" />
       <workItem from="1588984418656" duration="10171000" />
-      <workItem from="1589027705101" duration="17307000" />
+      <workItem from="1589027705101" duration="17483000" />
+      <workItem from="1589046014311" duration="718000" />
     </task>
     <servers />
   </component>
@@ -180,9 +175,9 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state width="1259" height="99" key="GridCell.Tab.3.right/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1588733200644" />
-    <state x="336" y="72" width="609" height="536" key="find.popup" timestamp="1588908191014">
+    <state x="336" y="72" width="612" height="536" key="find.popup" timestamp="1589046279308">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="336" y="72" width="609" height="536" key="find.popup/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1588908191014" />
+    <state x="336" y="72" width="612" height="536" key="find.popup/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1589046279308" />
   </component>
 </project>

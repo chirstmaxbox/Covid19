@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { MDBDataTable, MDBNavLink } from 'mdbreact';
+import { MDBDataTable } from 'mdbreact';
 import {overwrite, getCode} from "country-list";
 import Flag from 'react-world-flags';
 

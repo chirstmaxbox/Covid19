@@ -6,9 +6,12 @@ import CardChart from "./CardChart";
 import GlobalTable from "./GlobalTable";
 import Geography from "./Geography";
 import CanadaProvinceChart from "./CanadaProvinceChart";
+import CanadaLoadMoreProvinceChart from "./CanadaLoadMoreProvinceChart";
 
-window.baseURL = "https://pomber.github.io/covid19/timeseries.json";
+const baseURL = "https://pomber.github.io/covid19/timeseries.json";
+const proxyURL = "https://cors-anywhere.herokuapp.com/";
 const canadaURL = "https://api.covid19tracker.ca/summary/split";
+const canadaProvinceDetailURL = "https://api.covid19tracker.ca/reports/province";
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -21,10 +24,11 @@ class App extends React.Component {
             v_lastUpdate: "",
             v_country_name: "",
             v_canada_provinces: [],
+            v_canada_provinceDetail: [],
             v_num_Of_Countries: 0
         }
         this.loadWorldData = this.loadWorldData.bind(this);
-        this.loadCanadaData = this.loadCanadaData.bind(this);
+        this.loadCanadaProvinceData = this.loadCanadaProvinceData.bind(this);
     }
 
     componentDidMount() {
@@ -40,7 +44,7 @@ class App extends React.Component {
         if(name === this.state.v_country_name) return;
         this.moveToTop();
         if(name === "Canada") {
-            this.loadCanadaData();
+            this.loadCanadaProvinceData();
         }
         this.calculateData(name, this.state.v_countries);
     }
@@ -102,7 +106,7 @@ class App extends React.Component {
     }
 
     async loadWorldData() {
-        await axios.get(`${window.baseURL}`)
+        await axios.get(baseURL)
             .then((response => {
                     switch (response.status) {
                         case 200:
@@ -115,36 +119,8 @@ class App extends React.Component {
             )
     }
 
-    /*
-    async loadCanadaData() {
-        await axios.get(`${window.canadaURL}`)
-            .then((response => {
-                    switch (response.status) {
-                        case 200:
-                            let data = response.data;
-                            let provinces = [];
-                            let last_updated = data.last_updated;
-                            data.data.forEach(({province, change_cases, total_cases, total_recoveries}) => {
-                                provinces.push({province, last_updated, change_cases, total_cases, total_recoveries});
-                            })
-
-                            this.setState({
-                                v_canada_provinces: provinces
-                            });
-                            break;
-                        default:
-                            break;
-                    }
-                })
-            )
-    }
-
-     */
-
-
-    loadCanadaData() {
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        fetch(proxyurl + canadaURL)
+    loadCanadaProvinceData() {
+        fetch(proxyURL + canadaURL)
             .then(response => response.json())
             .then(data => {
                 let provinces = [];
@@ -160,6 +136,24 @@ class App extends React.Component {
             .catch(error => {
 
             })
+    }
+
+    loadCanadaProvinceDetailData = (name) => {
+            fetch( proxyURL + canadaProvinceDetailURL + "/" + name)
+                .then(response => response.json())
+                .then(data => {
+                    let province_dates = [];
+                    data.data.forEach(({change_cases, date}) => {
+                        province_dates.push({date, change_cases});
+                    })
+
+                    this.setState({
+                        v_canada_provinceDetail: province_dates
+                    });
+                })
+                .catch(error => {
+
+                })
     }
 
 
@@ -182,13 +176,28 @@ class App extends React.Component {
                     <div className="container-fluid padding-bottom-50">
                         <LineChart newCasesDates={this.state.v_new_case_dates} loading={this.state.loading}/>
                     </div>
+
                     {this.state.v_country_name === "Canada" &&
                     <div className="container-fluid padding-bottom-50">
+                        <hr />
                         <CanadaProvinceChart provinces={this.state.v_canada_provinces} />
                     </div>}
+
+                    {this.state.v_country_name === "Canada" &&
                     <div className="container-fluid padding-bottom-50">
-                        {this.state.v_num_Of_Countries > 1 && <Geography countryDetails={this.state.v_countryDetail} loading={this.state.loading}/>}
+                        <CanadaLoadMoreProvinceChart
+                            provinces={this.state.v_canada_provinces}
+                            province_detail={this.state.v_canada_provinceDetail}
+                            provinceChange={this.loadCanadaProvinceDetailData}
+                        />
                     </div>
+                    }
+
+                    {this.state.v_num_Of_Countries > 1 &&
+                    <div className="container-fluid padding-bottom-50">
+                        <Geography countryDetails={this.state.v_countryDetail} loading={this.state.loading}/>
+                    </div>
+                    }
 
                     <div className="container-fluid bg-secondary">
                         <hr/>

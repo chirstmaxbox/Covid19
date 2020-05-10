@@ -5,7 +5,7 @@ import * as am4core from "@amcharts/amcharts4/core";
 function CanadaProvinceChart(props) {
 
     useEffect(() => {
-        drawBarGraph(props.provinces, 1);
+        drawCompareBarChart(props.provinces);
         drawBarGraph(props.provinces, 2);
     }, [props.provinces]);
 
@@ -13,10 +13,10 @@ function CanadaProvinceChart(props) {
         let ret = code;
         switch (code) {
             case "NL":
-                ret = "Newfoundland & Lab";
+                ret = "Newfoundland";
                 break;
             case "PE":
-                ret = "Prince Edward Island";
+                ret = "Prince Edward";
                 break;
             case "NS":
                 ret = "Nova Scotia";
@@ -85,10 +85,10 @@ function CanadaProvinceChart(props) {
 
         if(data.length > 0) {
             if(type === 1) {
-                title.text = "Total Cases per Province - Up to: " + updated;
+                title.text = "Total Cases - Up to: " + updated;
             }
             else {
-                title.text = "New Cases per Province - Up to: " + updated;
+                title.text = "New Cases - Up to: " + updated;
             }
         }
 
@@ -129,16 +129,78 @@ function CanadaProvinceChart(props) {
         hoverState.properties.fillOpacity = 1;
 
         series.columns.template.adapter.add("fill", function(fill, target) {
-            return chart.colors.getIndex(target.dataItem.index);
+            //return chart.colors.getIndex(target.dataItem.index);
+            return am4core.color("#dc3545")
         });
 
 // Cursor
         chart.cursor = new am4charts.XYCursor();
     }
 
+    function drawCompareBarChart(provinces) {
+        let chart = am4core.create("compare_bar_chart_total_cases", am4charts.XYChart);
+
+        // Add percent sign to all numbers
+        chart.numberFormatter.numberFormat = "#";
+        let title = chart.titles.create();
+        title.fontSize = 25;
+        title.fontWeight = "bold";
+
+        let data = [];
+        let temp = props.provinces;
+        let updated = "";
+        temp.forEach(({province, last_updated, change_cases, total_cases, total_recoveries}) => {
+            data.push({province: getCode(province), total_cases: total_cases, total_recoveries: total_recoveries});
+            updated = last_updated;
+        })
+
+        if(data.length > 0) {
+            title.text = "Total Cases vs Recoveries - Up to: " + updated;
+        }
+        chart.data = data;
+
+// Create axes
+        let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.dataFields.category = "province";
+        categoryAxis.renderer.grid.template.location = 0;
+        categoryAxis.renderer.minGridDistance = 30;
+        categoryAxis.renderer.labels.template.horizontalCenter = "right";
+        categoryAxis.renderer.labels.template.verticalCenter = "middle";
+        categoryAxis.renderer.labels.template.rotation = 270;
+
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.title.text = "Number of Cases";
+        valueAxis.title.fontWeight = 800;
+
+// Create series
+        var series = chart.series.push(new am4charts.ColumnSeries());
+        series.dataFields.valueY = "total_cases";
+        series.dataFields.categoryX = "province";
+        series.clustered = false;
+        series.tooltipText = "Total cases in {categoryX}: [bold]{valueY}[/]";
+        series.columns.template.adapter.add("fill", function(fill, target) {
+            return am4core.color("#17a2b8");
+        });
+
+        var series2 = chart.series.push(new am4charts.ColumnSeries());
+        series2.dataFields.valueY = "total_recoveries";
+        series2.dataFields.categoryX = "province";
+        series2.clustered = false;
+        series2.columns.template.width = am4core.percent(50);
+        series2.tooltipText = "Total recoveries in {categoryX}: [bold]{valueY}[/]";
+        series2.columns.template.adapter.add("fill", function(fill, target) {
+            return am4core.color("#28a745");
+        });
+
+        chart.cursor = new am4charts.XYCursor();
+        chart.cursor.lineX.disabled = true;
+        chart.cursor.lineY.disabled = true;
+    }
+
     return (
         <>
-            <div id="bar_chart_total_cases"  style={{height: "500px"}}></div>
+            <h1 className="font-size-275em text-center padding-bottom-50">Provinces</h1>
+            <div id="compare_bar_chart_total_cases" style={{height: "500px"}}></div>
             <div id="bar_chart_new_cases"  style={{height: "500px"}}></div>
         </>
     )

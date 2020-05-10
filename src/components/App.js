@@ -29,7 +29,6 @@ class App extends React.Component {
 
     componentDidMount() {
         this.loadWorldData();
-        this.moveToTop();
     }
 
     moveToTop = () => {
@@ -39,6 +38,7 @@ class App extends React.Component {
     selectCountry = (e) => {
         let name = e.type === "change" ? e.target.value: e.target.text;
         if(name === this.state.v_country_name) return;
+        this.moveToTop();
         if(name === "Canada") {
             this.loadCanadaData();
         }

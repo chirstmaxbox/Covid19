@@ -22,7 +22,7 @@ function LineChart(props) {
         })
 
         if(data.length > 0) {
-            title.text = "New Cases per Day";
+            title.text = "New Cases";
         }
         chart.data = data;
 

@@ -8,11 +8,6 @@ import {Spinner} from "react-bootstrap";
 
 function Geography(props) {
     useEffect(() => {
-
-    })
-
-
-    useEffect(() => {
         // Create map instance
         let chart = am4core.create("chartdiv", am4maps.MapChart);
         // Set map definition

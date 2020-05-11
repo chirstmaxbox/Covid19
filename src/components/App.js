@@ -18,6 +18,7 @@ class App extends React.Component {
         this.state = {
             loading: true,
             loading_canada: true,
+            loading_canada_more: true,
             v_new_case_dates: [],
             v_countries: [],
             v_countryDetail: [],
@@ -142,21 +143,23 @@ class App extends React.Component {
     }
 
     loadCanadaProvinceDetailData = (name) => {
-            fetch( proxyURL + canadaProvinceDetailURL + "/" + name)
-                .then(response => response.json())
-                .then(data => {
-                    let province_dates = [];
-                    data.data.forEach(({change_cases, date}) => {
-                        province_dates.push({date, change_cases});
-                    })
-
-                    this.setState({
-                        v_canada_provinceDetail: province_dates
-                    });
+        this.setState({loading_canada_more: true});
+        fetch(proxyURL + canadaProvinceDetailURL + "/" + name)
+            .then(response => response.json())
+            .then(data => {
+                let province_dates = [];
+                data.data.forEach(({change_cases, date}) => {
+                    province_dates.push({date, change_cases});
                 })
-                .catch(error => {
 
-                })
+                this.setState({
+                    loading_canada_more: false,
+                    v_canada_provinceDetail: province_dates
+                });
+            })
+            .catch(error => {
+
+            })
     }
 
 
@@ -192,6 +195,7 @@ class App extends React.Component {
                             provinces={this.state.v_canada_provinces}
                             province_detail={this.state.v_canada_provinceDetail}
                             provinceChange={this.loadCanadaProvinceDetailData}
+                            loading_canada_more={this.state.loading_canada_more}
                         />
                     </div>
                     }

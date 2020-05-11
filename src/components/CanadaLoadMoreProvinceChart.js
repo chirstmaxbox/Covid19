@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4core from "@amcharts/amcharts4/core";
+import {Spinner} from "react-bootstrap";
 
 function CanadaLoadMoreProvinceChart(props) {
     const [provinceName, setProvinceName] = useState("");
@@ -169,7 +170,10 @@ function CanadaLoadMoreProvinceChart(props) {
                     </div>
                 </div>
             </div>
-            {provinceName !== "" && <div id="line-chart" style={{height: "500px"}}></div>}
+            <div>
+                {provinceName !== "" && props.loading_canada_more && <Spinner animation="border" role="status"></Spinner>}
+                {provinceName !== "" && <div id="line-chart" style={{height: "500px"}}></div>}
+            </div>
         </>
     )
 }

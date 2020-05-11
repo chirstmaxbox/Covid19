@@ -4,7 +4,7 @@
     <list default="true" id="c10d895a-e88a-40da-b6c8-691f3487d38b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/CanadaProvinceChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CanadaProvinceChart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CanadaLoadMoreProvinceChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CanadaLoadMoreProvinceChart.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +96,8 @@
       <workItem from="1589046014311" duration="3766000" />
       <workItem from="1589066881308" duration="5388000" />
       <workItem from="1589125770788" duration="21711000" />
-      <workItem from="1589199504764" duration="1453000" />
+      <workItem from="1589199504764" duration="1789000" />
+      <workItem from="1589202469642" duration="1032000" />
     </task>
     <servers />
   </component>

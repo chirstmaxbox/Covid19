@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4core from "@amcharts/amcharts4/core";
+import { Spinner } from 'react-bootstrap';
 
 function CanadaProvinceChart(props) {
 
@@ -200,8 +201,14 @@ function CanadaProvinceChart(props) {
     return (
         <>
             <h1 className="font-size-275em text-center padding-bottom-50">Provinces</h1>
-            <div id="compare_bar_chart_total_cases" style={{height: "500px"}}></div>
-            <div id="bar_chart_new_cases"  style={{height: "500px"}}></div>
+            <div>
+                <div id="compare_bar_chart_total_cases" style={{height: "500px"}}></div>
+                {props.loading_canada && <Spinner animation="border" role="status"></Spinner>}
+            </div>
+            <div>
+                <div id="bar_chart_new_cases"  style={{height: "500px"}}></div>
+                {props.loading_canada && <Spinner animation="border" role="status"></Spinner>}
+            </div>
         </>
     )
 

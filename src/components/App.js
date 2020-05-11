@@ -17,6 +17,7 @@ class App extends React.Component {
         super(props);
         this.state = {
             loading: true,
+            loading_canada: true,
             v_new_case_dates: [],
             v_countries: [],
             v_countryDetail: [],
@@ -71,6 +72,7 @@ class App extends React.Component {
                 worldStats.deaths += countryData.deaths;
                 let temp = countryData.date.split("-");
                 lastUpdate = new Date(temp[0], temp[1] - 1, temp[2]);
+                lastUpdate.setDate(lastUpdate.getDate() + 1);
 
                 let countriesStats = {confirmed: 0, new_cases: 0, deaths: 0, new_deaths: 0, recovered:0, active: 0};
                 countriesStats.confirmed = countryData.confirmed;
@@ -130,6 +132,7 @@ class App extends React.Component {
                 })
 
                 this.setState({
+                    loading_canada: false,
                     v_canada_provinces: provinces
                 });
             })
@@ -180,7 +183,7 @@ class App extends React.Component {
                     {this.state.v_country_name === "Canada" &&
                     <div className="container-fluid padding-bottom-50">
                         <hr />
-                        <CanadaProvinceChart provinces={this.state.v_canada_provinces} />
+                        <CanadaProvinceChart provinces={this.state.v_canada_provinces} loading_canada={this.state.loading_canada}/>
                     </div>}
 
                     {this.state.v_country_name === "Canada" &&
